@@ -1,0 +1,21 @@
+#:kivy 1.0.9
+
+<CalculatorDisplay>:
+    canvas.before:
+        Color: 
+            rgb: (1, 1, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    text: 'Test'
+    color: 0,0,0,1
+    size: self.texture_size
+
+<CalculatorNumbers>:
+
+<CalculatorRoot>:
+    orientation: 'vertical'
+    CalculatorDisplay:
+        size_hint_y: None
+    CalculatorNumbers:
+        size_hint_y: None

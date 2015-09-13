@@ -1,7 +1,7 @@
 from kivy.app import App
 from kivy.uix.widget import Widget
 from kivy.properties import NumericProperty, ReferenceListProperty, \
-    ObjectProperty, ListProperty, BooleanProperty, StringProperty
+    ObjectProperty, ListProperty, StringProperty
 from kivy.vector import Vector
 from kivy.clock import Clock
 from kivy.core.window import Window
@@ -47,8 +47,7 @@ class ArkanoidGame(Widget):
     broken = ListProperty(None)
     player = ObjectProperty(None)
 
-    game_over = BooleanProperty(False)
-    game_over_label = StringProperty("")
+    game_over = StringProperty("")
 
     def serve_ball(self, vel=(0, -7)):
         self.ball.center = self.center
@@ -105,15 +104,14 @@ class ArkanoidGame(Widget):
 
     def check_game_over(self):
         if self.player.score < 0 or set(self.broken) == set(self.breakables):
-            self.game_over = True
+            # self.game_over = True
             self.remove_widget(self.ball)
             if self.player.score < 0:
-                self.game_over_label = "Game Over"
+                self.game_over = "Game Over"
             else:
-                self.game_over_label = "You Win"
+                self.game_over = "You Win"
 
     def update(self, dt):
-        self.check_game_over()
         if self.game_over:
             return
 
@@ -121,6 +119,7 @@ class ArkanoidGame(Widget):
         self.player.bounce_ball(self.ball)
         self.check_breakables_bounce()
         self.check_ball_position()
+        self.check_game_over()
 
     def on_touch_move(self, touch):
         self.player.center_x = touch.x

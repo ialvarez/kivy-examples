@@ -7,15 +7,24 @@
         Rectangle:
             pos: self.pos
             size: self.size
-    text: 'Test'
+    text: ''
     color: 0,0,0,1
-    size: self.texture_size
+    size_hint_y: None
+    font_size: '75sp'
 
 <CalculatorNumbers>:
+    canvas.before:
+        Color: 
+            rgb: (1, 0, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
 
 <CalculatorRoot>:
     orientation: 'vertical'
     CalculatorDisplay:
-        size_hint_y: None
+        id: display
     CalculatorNumbers:
-        size_hint_y: None
+        id: numbers
+        orientation: 'vertical' 

@@ -16,15 +16,16 @@ class CalculatorNumbers(BoxLayout):
         self.app = CalculatorApp.get_running_app()
 
     def add_numbers(self):
-        numbers = [[7, 8, 9],
-                   [4, 5, 6],
-                   [1, 2, 3],
-                   [0]]
+        numbers = [[7, 8, 9, '/'],
+                   [4, 5, 6, 'x'],
+                   [1, 2, 3, '-'],
+                   [0, '.', '=', '+']]
 
         while(numbers):
             numbers_row = BoxLayout()
             for number in numbers.pop(0):
-                n = Button(text=str(number))
+                n = Button(text=str(number),
+                           font_size='75sp')
                 n.bind(on_press=self.add_to_display)
                 numbers_row.add_widget(n)
             self.add_widget(numbers_row)

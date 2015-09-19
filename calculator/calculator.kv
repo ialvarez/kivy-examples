@@ -9,8 +9,7 @@
             size: self.size
     text: ''
     color: 0,0,0,1
-    size_hint_y: None
-    font_size: '75sp'
+    font_size: '50sp'
     text_size: self.size
     halign: 'right'
     valign: 'middle'
@@ -22,10 +21,11 @@
         Rectangle:
             pos: self.pos
             size: self.size
-    size_hint_y: None
     background_normal: 'cancel.png'
     background_down: 'cancel.png'
     on_press: root.do_action()
+    size_hint_y: None
+    size_hint_x: None
 
 <CalculatorNumbers>:
     canvas.before:
@@ -39,13 +39,18 @@
 <CalculatorRoot>:
     orientation: 'vertical'
     BoxLayout:
+        canvas.before:
+            Color: 
+                rgb: (1, 1, 1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
         orientation: 'horizontal'
-        size_hint_y: None
+        size_hint_y: .4
         CalculatorLabelDisplay:
             id: display
         CalculatorButtonDisplay:
             id: clear
-            size_hint_x: 0.2
     CalculatorNumbers:
         id: numbers
         orientation: 'vertical' 

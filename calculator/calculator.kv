@@ -1,6 +1,6 @@
 #:kivy 1.0.9
 
-<CalculatorDisplay>:
+<CalculatorLabelDisplay>:
     canvas.before:
         Color: 
             rgb: (1, 1, 1)
@@ -11,6 +11,21 @@
     color: 0,0,0,1
     size_hint_y: None
     font_size: '75sp'
+    text_size: self.size
+    halign: 'right'
+    valign: 'middle'
+
+<CalculatorButtonDisplay>:
+    canvas.before:
+        Color: 
+            rgb: (1, 1, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    size_hint_y: None
+    background_normal: 'cancel_1.png'
+    background_down: 'cancel_1.png'
+    on_press: root.do_action()
 
 <CalculatorNumbers>:
     canvas.before:
@@ -23,8 +38,14 @@
 
 <CalculatorRoot>:
     orientation: 'vertical'
-    CalculatorDisplay:
-        id: display
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: None
+        CalculatorLabelDisplay:
+            id: display
+        CalculatorButtonDisplay:
+            id: clear
+            size_hint_x: 0.2
     CalculatorNumbers:
         id: numbers
         orientation: 'vertical' 

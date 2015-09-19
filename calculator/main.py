@@ -1,3 +1,4 @@
+from __future__ import division
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
@@ -6,8 +7,17 @@ from kivy.uix.label import Label
 from kivy.properties import ObjectProperty
 
 
-class CalculatorDisplay(Label):
+class CalculatorLabelDisplay(Label):
     pass
+
+
+class CalculatorButtonDisplay(Button):
+    def __init__(self, **kwargs):
+        super(CalculatorButtonDisplay, self).__init__(**kwargs)
+        self.app = CalculatorApp.get_running_app()
+
+    def do_action(self):
+        self.app.calculator.ids.display.text = ''
 
 
 class CalculatorNumbers(BoxLayout):
@@ -26,9 +36,18 @@ class CalculatorNumbers(BoxLayout):
             for number in numbers.pop(0):
                 n = Button(text=str(number),
                            font_size='75sp')
-                n.bind(on_press=self.add_to_display)
+                if number == '=':
+                    n.bind(on_press=self.calculate_display)
+                else:
+                    n.bind(on_press=self.add_to_display)
                 numbers_row.add_widget(n)
             self.add_widget(numbers_row)
+
+    def calculate_display(self, instance):
+        formula = self.app.calculator.ids.display.text
+        formula = formula.replace('x', '*')
+        result = eval(formula)
+        self.app.calculator.ids.display.text = str(result)
 
     def add_to_display(self, instance):
         self.app.calculator.ids.display.text += instance.text

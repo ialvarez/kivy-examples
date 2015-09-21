@@ -30,7 +30,7 @@ class TimeClockButton(Button):
 
     def add_time(self, instance):
         time_stamp = self.app.time_clock.ids.clock.text
-        new_time_clock = TimeClock(time_stamp=time_stamp)
+        new_time_clock = TimeClock(time_stamp=time_stamp, action=instance.text)
         self.app.session.add(new_time_clock)
         self.app.session.commit()
         self.app.time_clock.ids.entries.refresh()
@@ -49,7 +49,14 @@ class TimeClockList(BoxLayout):
         self.refresh()
 
     def roster_converter(self, index, value):
-        return {'content': value}
+        if value.action == 'in':
+            color = (0, 1, 0, 1)
+        else:
+            color = (1, 0, 0, 1)
+        return {
+            'content': value.time_stamp,
+            'color': color,
+        }
 
     def create_list_adapter(self, data=[]):
         return ListAdapter(data=data,
@@ -62,7 +69,7 @@ class TimeClockList(BoxLayout):
 
         data = []
         for d in self.app.session.query(TimeClock).all():
-            data.append(d.time_stamp)
+            data.append(d)
         data = reversed(data)
 
         self.list_view = ListView(adapter=self.create_list_adapter(data))

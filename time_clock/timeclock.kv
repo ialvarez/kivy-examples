@@ -9,12 +9,16 @@
     height: "75dp"
     Label:
         text: root.content
+        color: root.color
 
 <TimeClockRoot>:
     orientation: 'vertical'
     TimeClockLabel:
         id: clock
-    TimeClockButton:
-        text: 'punch in/out'
+    BoxLayout:
+        TimeClockButton:
+            text: 'in'
+        TimeClockButton:
+            text: 'out'
     TimeClockList:
         id: entries

@@ -11,6 +11,7 @@ class TimeClock(Base):
 
     id = Column(Integer, primary_key=True)
     time_stamp = Column(String(128), nullable=False)
+    action = Column(String(3), nullable=False)
 
 
 engine = create_engine('sqlite:///time_clock.db')

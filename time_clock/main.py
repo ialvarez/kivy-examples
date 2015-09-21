@@ -9,6 +9,11 @@ from kivy.properties import StringProperty
 from kivy.adapters.listadapter import ListAdapter
 from kivy.clock import Clock
 
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+from sqlite_ex import TimeClock, Base
+
 import time
 
 
@@ -24,7 +29,10 @@ class TimeClockButton(Button):
         self.bind(on_press=self.add_time)
 
     def add_time(self, instance):
-        self.app.time_list.append(self.app.time_clock.ids.clock.text)
+        time_stamp = self.app.time_clock.ids.clock.text
+        new_time_clock = TimeClock(time_stamp=time_stamp)
+        self.app.session.add(new_time_clock)
+        self.app.session.commit()
         self.app.time_clock.ids.entries.refresh()
 
 
@@ -38,9 +46,7 @@ class TimeClockList(BoxLayout):
     def __init__(self, **kwargs):
         super(TimeClockList, self).__init__(**kwargs)
         self.app = TimeClockApp.get_running_app()
-
-        self.list_view = ListView(adapter=self.create_list_adapter())
-        self.add_widget(self.list_view)
+        self.refresh()
 
     def roster_converter(self, index, value):
         return {'content': value}
@@ -51,8 +57,14 @@ class TimeClockList(BoxLayout):
                            cls=TimeClockListItem)
 
     def refresh(self):
-        self.remove_widget(self.list_view)
-        data = reversed(self.app.time_list)
+        if self.list_view:
+            self.remove_widget(self.list_view)
+
+        data = []
+        for d in self.app.session.query(TimeClock).all():
+            data.append(d.time_stamp)
+        data = reversed(data)
+
         self.list_view = ListView(adapter=self.create_list_adapter(data))
         self.add_widget(self.list_view)
 
@@ -62,13 +74,21 @@ class TimeClockRoot(BoxLayout):
 
 
 class TimeClockApp(App):
-    time_list = ObjectProperty([])
     time_clock = ObjectProperty()
+    session = ObjectProperty()
 
     def build(self):
+        self.init_db()
         self.time_clock = TimeClockRoot()
         Clock.schedule_interval(self.time_clock.ids.clock.update, 1)
         return self.time_clock
+
+    def init_db(self):
+        engine = create_engine('sqlite:///time_clock.db')
+        Base.metadata.bind = engine
+        DBSession = sessionmaker(bind=engine)
+        self.session = DBSession()
+
 
 
 TimeClockApp().run()

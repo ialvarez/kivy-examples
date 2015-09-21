@@ -1,0 +1,20 @@
+<TimeClockLabel>:
+
+<TimeClockButton>:
+
+<TimeClockList>:
+
+<TimeClockListItem>:
+    size_hint_y: None
+    height: "75dp"
+    Label:
+        text: root.content
+
+<TimeClockRoot>:
+    orientation: 'vertical'
+    TimeClockLabel:
+        id: clock
+    TimeClockButton:
+        text: 'punch in/out'
+    TimeClockList:
+        id: entries

@@ -4,6 +4,13 @@
     valign: 'bottom'
     padding_x: '20sp'
 
+<TimeClockLabel>:
+    font_size: '30sp'
+    text_size: self.size
+    halign: 'left'
+    valign: 'middle'
+    padding_x: '20sp'
+
 <TimeClockStatus>:
     orientation: 'vertical'
     TimeClockLabel:
@@ -15,13 +22,6 @@
         text: 'Today'
     TimeClockLabel:
         text: 'This week'
-
-<TimeClockLabel>:
-    font_size: '30sp'
-    text_size: self.size
-    halign: 'left'
-    valign: 'middle'
-    padding_x: '20sp'
 
 <TimeClockButton>:
 
@@ -45,6 +45,7 @@
     TimeClockHeader:
         halign: 'right'
         size_hint_y: .1
+        text: app.current_date()
     TimeClockStatus:
         size_hint_y: .5
     TimeClockList:

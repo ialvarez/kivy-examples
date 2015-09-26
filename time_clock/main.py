@@ -19,14 +19,11 @@ import time
 
 
 class TimeClockHeader(Label):
-    def __init__(self, **kwargs):
-        super(TimeClockHeader, self).__init__(**kwargs)
-        self.text = TimeAux().current_date()
+    pass
 
 
 class TimeClockLabel(Label):
-    def update(self, *args):
-        self.text = time.asctime()
+    pass
 
 
 class TimeClockStatus(BoxLayout):
@@ -41,9 +38,7 @@ class TimeClockButton(Button):
 
     def add_time(self, instance):
         time_stamp = self.app.time_aux.time_stamp()
-        new_time_clock = TimeClockTable(time_stamp=time_stamp, action=instance.text)
-        self.app.session.add(new_time_clock)
-        self.app.session.commit()
+        self.app.add_new(time_stamp=time_stamp, action=instance.text)
         self.app.time_clock.ids.entries.generate_list_view()
 
 
@@ -71,7 +66,7 @@ class TimeClockList(BoxLayout):
         if self.list_view:
             self.remove_widget(self.list_view)
 
-        data = reversed([d for d in self.app.session.query(TimeClockTable).all()])
+        data = reversed([d for d in self.app.get_all()])
 
         adapter = ListAdapter(data=data,
                               args_converter=self.roster_converter,
@@ -103,7 +98,15 @@ class TimeClockApp(App):
     def update(self, dt):
         self.time_aux.update()
 
+    def get_all(self):
+        return self.session.query(TimeClockTable).all()
 
+    def add_new(self, time_stamp, action):
+        self.session.add(TimeClockTable(time_stamp=time_stamp, action=action))
+        self.session.commit()
+
+    def current_date(self):
+        return self.time_aux.current_date()
 
 
 TimeClockApp().run()

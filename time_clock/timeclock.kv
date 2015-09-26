@@ -1,10 +1,39 @@
+<TimeClockHeader>:
+    font_size: '20sp'
+    text_size: self.size
+    valign: 'bottom'
+    padding_x: '20sp'
+
+<TimeClockStatus>:
+    orientation: 'vertical'
+    TimeClockLabel:
+        text: 'Status'
+    TimeClockHeader:
+        halign: 'center'
+        text: 'Total work hours'
+    TimeClockLabel:
+        text: 'Today'
+    TimeClockLabel:
+        text: 'This week'
+
 <TimeClockLabel>:
+    font_size: '30sp'
+    text_size: self.size
+    halign: 'left'
+    valign: 'middle'
+    padding_x: '20sp'
 
 <TimeClockButton>:
 
 <TimeClockList>:
 
 <TimeClockListItem>:
+    canvas.before:
+        Color: 
+            rgb: (.72, .72, .72)
+        Rectangle:
+            pos: self.pos
+            size: self.size
     size_hint_y: None
     height: "75dp"
     Label:
@@ -13,12 +42,17 @@
 
 <TimeClockRoot>:
     orientation: 'vertical'
-    TimeClockLabel:
-        id: clock
+    TimeClockHeader:
+        halign: 'right'
+        size_hint_y: .1
+    TimeClockStatus:
+        size_hint_y: .5
+    TimeClockList:
+        id: entries
     BoxLayout:
+        size_hint_y: .2
         TimeClockButton:
             text: 'in'
         TimeClockButton:
             text: 'out'
-    TimeClockList:
-        id: entries
+

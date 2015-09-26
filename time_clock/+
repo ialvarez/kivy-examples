@@ -1,0 +1,30 @@
+<TimeClockHeader>:
+
+<TimeClockLabel>:
+
+<TimeClockButton>:
+
+<TimeClockList>:
+
+<TimeClockListItem>:
+    size_hint_y: None
+    height: "75dp"
+    Label:
+        text: root.content
+        color: root.color
+
+<TimeClockRoot>:
+    orientation: 'vertical'
+    TimeClockHeader:
+        size_hint_y: None
+
+    TimeClockLabel:
+        id: clock
+    BoxLayout:
+        TimeClockButton:
+            text: 'in'
+        TimeClockButton:
+            text: 'out'
+    TimeClockList:
+        id: entries
+

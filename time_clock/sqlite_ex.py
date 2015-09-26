@@ -6,7 +6,7 @@ from sqlalchemy import create_engine
 Base = declarative_base()
 
 
-class TimeClock(Base):
+class TimeClockTable(Base):
     __tablename__ = 'time_clock'
 
     id = Column(Integer, primary_key=True)

@@ -1,0 +1,65 @@
+<YesLabel>:
+    canvas.before:
+        Color: 
+            rgb: (.4, .8, .2)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<NoLabel>:
+    canvas.before:
+        Color: 
+            rgb: (1, .4, .4)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<NeutralLabel>:
+
+<DecisionRoot>:
+    orientation: 'vertical'
+    canvas.before:
+        Color: 
+            rgb: (.94, .94, .94)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    Label: 
+        id: result
+        size_hint_y: None
+        text: ''
+        font_size: '60sp'
+        text_size: self.size
+        halign: 'center'
+        valign: 'middle'
+        color: (.25, .25, .25, 1)
+
+    Label:
+        canvas.before:
+            Color: 
+                rgb: (.25, .25, .25)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        size_hint_y: None
+        height: 1
+
+
+    BoxLayout:
+        ProgressList:
+            id: yes
+            orientation: 'vertical'
+        ProgressList:
+            id: no
+            orientation: 'vertical'
+
+    Button:
+        id: start
+        text: 'START'
+        size_hint_y: None
+        on_press: root.start()
+        font_size: '40sp'
+        text_size: self.size
+        halign: 'center'
+        valign: 'middle'
+

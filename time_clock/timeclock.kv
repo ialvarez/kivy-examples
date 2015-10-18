@@ -1,15 +1,20 @@
 <TimeClockHeader>:
-    font_size: '20sp'
+    canvas.before:
+        Color: 
+            rgb: (.72, 1, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    color: (0, .28, 0, 1)
+    font_size: '30sp'
     text_size: self.size
     valign: 'bottom'
-    padding_x: '20sp'
 
 <TimeClockLabel>:
-    font_size: '30sp'
+    font_size: '25sp'
     text_size: self.size
     halign: 'left'
     valign: 'middle'
-    padding_x: '20sp'
 
 <TimeClockStatus>:
     orientation: 'vertical'
@@ -36,9 +41,14 @@
             size: self.size
     size_hint_y: None
     height: "75dp"
-    Label:
-        text: root.content
-        color: root.color
+    BoxLayout:
+        orientation: 'horizontal'
+        Label:
+            text: root.ts_in
+            color: root.color
+        Label:
+            text: root.ts_out
+            color: root.color
 
 <TimeClockRoot>:
     orientation: 'vertical'

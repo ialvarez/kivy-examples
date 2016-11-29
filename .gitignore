@@ -1,1 +1,4 @@
 .buildozer/
+*.pyc
+time_clock/sqlite_ex.pyc
+time_clock/time_aux.pyc
